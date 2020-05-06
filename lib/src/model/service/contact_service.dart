@@ -1,9 +1,11 @@
+import 'package:contact_list/src/model/dto/contact.dart';
+import 'package:contact_list/src/model/mapper/contact_mapper.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:path/path.dart';
 
 class ContactService {
-  final String table = 'contact';
+  final String _table = 'contact';
 
   static final ContactService _instance = ContactService.internal();
 
@@ -32,9 +34,17 @@ class ContactService {
       version: 1,
       onCreate: (Database db, int newerVersion) async {
         await db.execute(
-          "CREATE DATABASE $table(id INTEGER PRIMARY KEY, name TEXT, email TEXT, phone TEXT, img TEXT)"
+          "CREATE DATABASE $_table(id INTEGER PRIMARY KEY, name TEXT, email TEXT, phone TEXT, img TEXT)"
         );
       }
     );
+  }
+
+  Future<ContactDTO> save(ContactDTO dto) async {
+    Database database = await db;
+
+    dto.id = await database.insert(_table, ContactMapper.toMap(dto));
+
+    return dto;
   }
 }
