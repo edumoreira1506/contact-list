@@ -97,4 +97,12 @@ class ContactService {
 
     return dtos;
   }
+
+  Future<int> count() async {
+    Database database = await db;
+
+    return Sqflite.firstIntValue(
+      await database.rawQuery("SELECT COUNT(*) FROM $_table")
+    );
+  }
 }
