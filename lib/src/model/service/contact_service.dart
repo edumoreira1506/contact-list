@@ -64,4 +64,16 @@ class ContactService {
       return null;
     }
   }
+
+  Future<bool> delete(int id) async {
+    Database database = await db;
+
+    int deleted = await database.delete(
+      _table,
+      where: "id = ?",
+      whereArgs: [id]
+    );
+
+    return deleted == 1 ? true : false;
+  }
 }
