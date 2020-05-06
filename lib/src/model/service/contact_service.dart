@@ -47,4 +47,21 @@ class ContactService {
 
     return dto;
   }
+
+  Future<ContactDTO> search(int id) async {
+    Database database = await db;
+
+    List<Map> maps = await database.query(
+      _table,
+      columns: ['name', 'id', 'phone', 'email', 'img'],
+      where: "id = ?",
+      whereArgs: [id]
+    );
+
+    if (maps.length > 0) {
+      return ContactMapper.toDTO(maps.first);
+    } else {
+      return null;
+    }
+  }
 }
