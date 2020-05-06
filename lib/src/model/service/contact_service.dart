@@ -76,4 +76,17 @@ class ContactService {
 
     return deleted == 1 ? true : false;
   }
+
+  Future<bool> update(ContactDTO dto) async {
+    Database database = await db;
+
+    int updated = await database.update(
+      _table,
+      ContactMapper.toMap(dto),
+      whereArgs: [dto.id],
+      where: "id = ?"
+    );
+
+    return updated == 1 ? true : false;
+  }
 }
