@@ -89,4 +89,12 @@ class ContactService {
 
     return updated == 1 ? true : false;
   }
+
+  Future<List<ContactDTO>> all() async {
+    Database database = await db;
+    List<Map> listMap = await database.rawQuery("SELECT * FROM $_table");
+    List<ContactDTO> dtos = listMap.map((item) => ContactMapper.toDTO(item)).toList();
+
+    return dtos;
+  }
 }
