@@ -105,4 +105,10 @@ class ContactService {
       await database.rawQuery("SELECT COUNT(*) FROM $_table")
     );
   }
+
+  Future<void> close() async {
+    Database database = await db;
+
+    database.close();
+  }
 }
