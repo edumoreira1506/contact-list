@@ -11,8 +11,8 @@ class ContactMapper {
     );
   }
 
-  static Map toMap(ContactDTO dto) {
-    Map map = {
+  static Map<String, dynamic> toMap(ContactDTO dto) {
+    Map<String, dynamic> map = {
       'email': dto.email,
       'phone': dto.phone,
       'name': dto.name,

@@ -34,7 +34,7 @@ class ContactService {
       version: 1,
       onCreate: (Database db, int newerVersion) async {
         await db.execute(
-          "CREATE DATABASE $_table(id INTEGER PRIMARY KEY, name TEXT, email TEXT, phone TEXT, img TEXT)"
+          "CREATE TABLE $_table(id INTEGER PRIMARY KEY, name TEXT, email TEXT, phone TEXT, img TEXT)"
         );
       }
     );
