@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:contact_list/src/presentation/widgets/circle_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -24,18 +23,7 @@ class Contact extends StatelessWidget {
           padding: EdgeInsets.all(10),
           child: Row(
             children: <Widget>[
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: this.image != null && this.image != ''
-                      ? FileImage(File(this.image))
-                      : AssetImage("assets/images/person.png")
-                  )
-                ),
-              ),
+              CircleImage.small(image: this.image),
               Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: Column(
