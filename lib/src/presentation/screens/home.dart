@@ -6,6 +6,7 @@ import 'package:contact_list/src/presentation/widgets/home/contacts.dart';
 import 'package:contact_list/src/presentation/widgets/home/modal_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -84,6 +85,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _handleCallContact(ContactDTO contact) {
+    launch("tel:${contact.phone}");
+
+    Navigator.pop(context);
+  }
+
   void _showOptions(BuildContext context, int index) {
     showModalBottomSheet(
       context: context,
@@ -95,7 +102,7 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                ModalButton(() {}, 'Call'),
+                ModalButton(() => _handleCallContact(_contacts[index]), 'Call'),
                 ModalButton(() => _handleChangeContactPage(contact: _contacts[index]), 'Edit'),
                 ModalButton(() => _handleDeleteContact(_contacts[index]), 'Delete'),
               ],

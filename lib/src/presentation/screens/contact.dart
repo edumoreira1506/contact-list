@@ -43,7 +43,6 @@ class _ContactPageState extends State<ContactPage> {
       _contact.name = _name.text;
 
       Navigator.pop(context);
-      Navigator.pop(context);
 
       widget.onSave(_contact);
     });
@@ -59,6 +58,7 @@ class _ContactPageState extends State<ContactPage> {
           FlatButton(
             child: Text('Yes'),
             onPressed: () {
+              Navigator.pop(context);
               Navigator.pop(context);
               Navigator.pop(context);
 
