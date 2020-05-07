@@ -3,8 +3,9 @@ import 'package:flutter/widgets.dart';
 
 class Header extends StatelessWidget with PreferredSizeWidget {
   final Widget title;
+  final List<Widget> actions;
 
-  Header(this.title);
+  Header(this.title, this.actions);
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +13,7 @@ class Header extends StatelessWidget with PreferredSizeWidget {
       title: this.title,
       backgroundColor: Colors.red,
       centerTitle: true,
+      actions: this.actions,
     );
   }
 

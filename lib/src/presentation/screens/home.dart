@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+enum OrderOptions { asc, desc }
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -91,6 +93,19 @@ class _HomePageState extends State<HomePage> {
     Navigator.pop(context);
   }
 
+  void _sortList(OrderOptions option) {
+    switch (option) {
+      case OrderOptions.asc:
+        _contacts.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+        break;
+      case OrderOptions.desc:
+        _contacts.sort((a, b) => b.name.toLowerCase().compareTo(a.name.toLowerCase()));
+        break;
+    }
+
+    setState(() { });
+  }
+
   void _showOptions(BuildContext context, int index) {
     showModalBottomSheet(
       context: context,
@@ -116,7 +131,22 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Header(
-        Text('Contacts')
+        Text('Contacts'),
+        [
+          PopupMenuButton<OrderOptions>(
+            itemBuilder: (context) => <PopupMenuEntry<OrderOptions>>[
+              const PopupMenuItem<OrderOptions>(
+                child: Text('ASC'),
+                value: OrderOptions.asc,
+              ),
+              const PopupMenuItem(
+                child: Text('DESC'),
+                value: OrderOptions.desc,
+              )
+            ],
+            onSelected: _sortList,
+          )
+        ]
       ),
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
@@ -127,7 +157,7 @@ class _HomePageState extends State<HomePage> {
       body: Contacts(
         _contacts,
         _showOptions
-      )
+      ),
     );
   }
 }

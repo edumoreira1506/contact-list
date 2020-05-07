@@ -96,7 +96,8 @@ class _ContactPageState extends State<ContactPage> {
     return WillPopScope(
         child: Scaffold(
           appBar: Header(
-            Text(_contact.name ?? 'New Contact')
+            Text(_contact.name ?? 'New Contact'),
+            []
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: _onSave,
