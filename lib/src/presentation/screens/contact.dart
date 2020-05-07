@@ -4,6 +4,7 @@ import 'package:contact_list/src/presentation/widgets/header.dart';
 import 'package:contact_list/src/presentation/widgets/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ContactPage extends StatefulWidget {
   final ContactDTO contact;
@@ -80,6 +81,16 @@ class _ContactPageState extends State<ContactPage> {
     return Future.value(false);
   }
 
+  void _handleChangeImage() {
+    ImagePicker.pickImage(source: ImageSource.camera).then((file) {
+      if (file == null) return;
+
+      setState(() {
+        _contact.img = file.path;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -97,7 +108,8 @@ class _ContactPageState extends State<ContactPage> {
             child: Column(
               children: <Widget>[
                 GestureDetector(
-                  child: CircleImage.big(image: _contact.img)
+                  child: CircleImage.big(image: _contact.img),
+                  onTap: _handleChangeImage,
                 ),
                 Input(
                   controller: _name,
