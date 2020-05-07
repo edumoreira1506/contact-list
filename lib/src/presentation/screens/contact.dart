@@ -47,42 +47,73 @@ class _ContactPageState extends State<ContactPage> {
     });
   }
 
+  Future<bool> _confirm() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Confirm!'),
+        content: Text('Save alterations?'),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Yes'),
+            onPressed: () {
+              Navigator.pop(context);
+
+              _onSave();
+            },
+          ),
+          FlatButton(
+            child: Text('No'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
+      )
+    );
+
+    return Future.value(false);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: Header(
-        Text(_contact.name ?? 'New Contact')
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _onSave,
-        child: Icon(Icons.save),
-        backgroundColor: Colors.red,
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          children: <Widget>[
-            GestureDetector(
-              child: CircleImage.big(image: _contact.img)
+    return WillPopScope(
+        child: Scaffold(
+          appBar: Header(
+            Text(_contact.name ?? 'New Contact')
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: _onSave,
+            child: Icon(Icons.save),
+            backgroundColor: Colors.red,
+          ),
+          body: SingleChildScrollView(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              children: <Widget>[
+                GestureDetector(
+                  child: CircleImage.big(image: _contact.img)
+                ),
+                Input(
+                  controller: _name,
+                  label: 'Name',
+                  type: TextInputType.text,
+                ),
+                Input(
+                  controller: _phone,
+                  label: 'Phone',
+                  type: TextInputType.phone,
+                ),
+                Input(
+                  controller: _email,
+                  label: 'Email',
+                  type: TextInputType.emailAddress,
+                )
+              ],
             ),
-            Input(
-              controller: _name,
-              label: 'Name',
-              type: TextInputType.text,
-            ),
-            Input(
-              controller: _phone,
-              label: 'Phone',
-              type: TextInputType.phone,
-            ),
-            Input(
-              controller: _email,
-              label: 'Email',
-              type: TextInputType.emailAddress,
-            )
-          ],
+          ),
         ),
-      ),
+      onWillPop: _confirm
     );
   }
 }
