@@ -7,8 +7,9 @@ import 'package:flutter/widgets.dart';
 
 class ContactPage extends StatefulWidget {
   final ContactDTO contact;
+  final void Function(ContactDTO) onSave;
 
-  ContactPage({ this.contact });
+  ContactPage({ this.contact, this.onSave });
 
   @override
   _ContactPageState createState() => _ContactPageState();
@@ -35,6 +36,17 @@ class _ContactPageState extends State<ContactPage> {
     }
   }
 
+  void _onSave() {
+    setState(() {
+      _contact.phone = _phone.text;
+      _contact.email = _email.text;
+      _contact.name = _name.text;
+
+      Navigator.pop(context);
+      widget.onSave(_contact);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +54,7 @@ class _ContactPageState extends State<ContactPage> {
         Text(_contact.name ?? 'New Contact')
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { },
+        onPressed: _onSave,
         child: Icon(Icons.save),
         backgroundColor: Colors.red,
       ),

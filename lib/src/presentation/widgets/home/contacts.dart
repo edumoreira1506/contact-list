@@ -5,8 +5,9 @@ import 'package:flutter/widgets.dart';
 
 class Contacts extends StatelessWidget {
   final List<ContactDTO> contacts;
+  final void Function(ContactDTO) onTap;
 
-  Contacts(this.contacts);
+  Contacts(this.contacts, this.onTap);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,7 @@ class Contacts extends StatelessWidget {
         image: this.contacts[index].img,
         email: this.contacts[index].email,
         phone: this.contacts[index].phone,
+        onTap: () => this.onTap(this.contacts[index]),
       ),
       itemCount: this.contacts.length,
     );

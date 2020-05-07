@@ -7,17 +7,20 @@ class Contact extends StatelessWidget {
   final String image;
   final String phone;
   final String email;
+  final void Function() onTap;
 
   Contact({
     this.name,
     this.image,
     this.phone,
-    this.email
+    this.email,
+    this.onTap
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: this.onTap,
       child: Card(
         child: Padding(
           padding: EdgeInsets.all(10),
